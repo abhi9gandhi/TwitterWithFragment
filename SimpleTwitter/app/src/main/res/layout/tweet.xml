@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:id="@+id/llpic"
+        android:layout_weight="0.2">
+
+         <ImageView
+          android:layout_width="70dp"
+             android:layout_height="70dp"
+             android:id="@+id/IvprofilePic"
+            android:layout_gravity="left"
+             android:scaleType="fitXY"
+             android:adjustViewBounds="true" />
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:id="@+id/lluser"
+        android:layout_toRightOf="@+id/llpic"
+        android:layout_weight="0.8"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:id="@+id/llname"
+        android:layout_weight="0.2"
+        >
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_weight="0.5"
+        android:layout_gravity="left"
+        android:id="@+id/Tvusername"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_weight="0.5"
+        android:layout_gravity="end"
+        android:layout_toRightOf="@+id/Tvusername"
+        android:id="@+id/Tvtime"
+        android:gravity="right" />
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/llname"
+        android:text="New Text"
+        android:id="@+id/Tvtext"
+        android:layout_gravity="center_horizontal"
+        android:layout_weight="0.7"
+        android:gravity="left"
+        android:layout_marginLeft="0dp"
+        android:layout_marginTop="25dp"
+        android:layout_marginBottom="30dp"
+        android:autoLink="all" />
+    </LinearLayout>
+</RelativeLayout>
