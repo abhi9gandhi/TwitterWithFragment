@@ -5,8 +5,14 @@
     android:theme="@style/MyActionBar"
     >
     <item android:id="@+id/action_compose"
-        android:icon="@mipmap/tweet_compose"
+        android:icon="@mipmap/compose_tweet"
         android:title="@string/action_compose"
+        app:showAsAction="ifRoom"
+        />
+
+    <item android:id="@+id/action_home"
+        android:icon="@mipmap/home"
+        android:title="@string/action_home"
         app:showAsAction="ifRoom"
         />
 </menu>

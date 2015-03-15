@@ -1,12 +1,18 @@
 package com.codepath.apps.twitterclient;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.astuetz.PagerSlidingTabStrip;
 import com.codepath.apps.twitterclient.Fragment.HomeTimeLineFrgament;
 import com.codepath.apps.twitterclient.Fragment.MentionTimelineFragment;
 import com.codepath.apps.twitterclient.Fragment.TimelineFragment;
@@ -24,11 +30,20 @@ public class TimelineActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_timeline);
+
+        ViewPager viewpager = (ViewPager) findViewById(R.id.viewpager);
+        viewpager.setAdapter(new PageViewerAdaptor(getSupportFragmentManager()));
+
+        // Give the PagerSlidingTabStrip the ViewPager
+        PagerSlidingTabStrip tabsStrip = (PagerSlidingTabStrip) findViewById(R.id.tabs);
+        // Attach the view pager to the tab strip
+        tabsStrip.setViewPager(viewpager);
+
        // hometimelinefrag = HomeTimeLineFrgament.newInstance();
-        mentiontimefrag = MentionTimelineFragment.newInstance();
+    //    mentiontimefrag = MentionTimelineFragment.newInstance();
         client = TwitterApp.getRestClient();
      //   getFragmentManager().beginTransaction().replace(R.id.flcontainer, hometimelinefrag).commit();
-        getFragmentManager().beginTransaction().replace(R.id.flcontainer, mentiontimefrag).commit();
+     //   getFragmentManager().beginTransaction().replace(R.id.flcontainer, mentiontimefrag).commit();
     }
 
 
@@ -67,6 +82,11 @@ public class TimelineActivity extends ActionBarActivity {
             Intent i = new Intent(TimelineActivity.this, ComposeActivity.class);
             startActivityForResult(i, 1);
             return true;
+        } else if (id == R.id.action_home) {
+            Intent i = new Intent(TimelineActivity.this, UserActivity.class);
+            i.putExtra("screen_name", "");
+            startActivity(i);
+            return true;
         }
 
         return super.onOptionsItemSelected(item);
@@ -81,4 +101,34 @@ public class TimelineActivity extends ActionBarActivity {
             sendTweet(tweet);
         }
     }
+
+    public class PageViewerAdaptor extends FragmentPagerAdapter {
+        private String tabTitles[] = new String[] { "Home", "Mentions" };
+
+        public PageViewerAdaptor(FragmentManager fm) {
+            super(fm);
+        }
+
+        @Override
+        public int getCount() {
+            return tabTitles.length;
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            if (position == 0) {
+                return HomeTimeLineFrgament.newInstance();
+            } else {
+                return MentionTimelineFragment.newInstance();
+            }
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            // Generate title based on item position
+            return tabTitles[position];
+        }
+    }
+
+
 }

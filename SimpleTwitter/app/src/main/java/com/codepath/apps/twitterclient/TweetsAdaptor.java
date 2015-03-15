@@ -39,6 +39,8 @@ public class TweetsAdaptor extends ArrayAdapter<Tweet> {
         TextView text = (TextView) convertView.findViewById(R.id.Tvtext);
         ImageView profilePics = (ImageView) convertView.findViewById(R.id.IvprofilePic);
 
+
+
         username.setText(tweet.getUser().getName());
         String relativeDate = getRelativeTimeAgo(tweet.getCreatedAt());
         createAt.setText(relativeDate);

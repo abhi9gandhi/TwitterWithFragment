@@ -33,6 +33,10 @@ public class MentionTimelineFragment extends TimelineFragment implements Timelin
             return fragment;
         }
 
+        public void MentionTimelineFragment() {
+
+        }
+
         @Override
         public void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);

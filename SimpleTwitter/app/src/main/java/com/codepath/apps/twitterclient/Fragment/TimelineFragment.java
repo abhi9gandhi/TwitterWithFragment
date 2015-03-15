@@ -1,9 +1,11 @@
 package com.codepath.apps.twitterclient.Fragment;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.app.Fragment;
+
+import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -16,9 +18,11 @@ import android.widget.Toast;
 
 import com.codepath.apps.twitterclient.EndlessScrollListener;
 import com.codepath.apps.twitterclient.R;
+import com.codepath.apps.twitterclient.TimelineActivity;
 import com.codepath.apps.twitterclient.TweetsAdaptor;
 import com.codepath.apps.twitterclient.TwitterApp;
 import com.codepath.apps.twitterclient.TwitterClient;
+import com.codepath.apps.twitterclient.UserActivity;
 import com.codepath.apps.twitterclient.models.Tweet;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
@@ -132,6 +136,16 @@ public class TimelineFragment extends Fragment {
             }
         });
 
+        ltweets.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Tweet item = tweets.get(position);
+                Intent i = new Intent(getActivity(), UserActivity.class);
+                i.putExtra("screen_name", item.getUser().getScreenName());
+                startActivity(i);
+            }
+        });
+
         // Setup refresh listener which triggers new data loading
         swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -151,6 +165,8 @@ public class TimelineFragment extends Fragment {
                 android.R.color.holo_green_light,
                 android.R.color.holo_orange_light,
                 android.R.color.holo_red_light);
+
+
 
         return view;
     }

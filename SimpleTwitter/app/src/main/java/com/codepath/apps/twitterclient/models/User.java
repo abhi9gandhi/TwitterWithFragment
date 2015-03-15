@@ -24,6 +24,42 @@ public class User extends Model {
     @Column(name = "screenName")
     private String screenName;
 
+    @Column(name = "tagLine")
+    private String tagLine;
+
+    @Column(name = "followerCount")
+    private int followerCount;
+
+    @Column(name = "followingCount")
+    private int followingCount;
+
+    @Column(name = "profileUrl")
+    private String profileUrl;
+
+    public String getTagLine() {
+        return tagLine;
+    }
+
+    public void setTagLine(String tagLine) {
+        this.tagLine = tagLine;
+    }
+
+    public int getFollowerCount() {
+        return followerCount;
+    }
+
+    public void setFollowerCount(int followerCount) {
+        this.followerCount = followerCount;
+    }
+
+    public int getFollowingCount() {
+        return followingCount;
+    }
+
+    public void setFollowingCount(int followingCount) {
+        this.followingCount = followingCount;
+    }
+
     public String getUserName() {
         return userName;
     }
@@ -40,8 +76,7 @@ public class User extends Model {
         this.tweetId = tweetId;
     }
 
-    @Column(name = "profileUrl")
-    private String profileUrl;
+
 
     public String getName() {
         return userName;
@@ -72,6 +107,9 @@ public class User extends Model {
             this.userName = object.getString("name");
             this.screenName = object.getString("screen_name");
             this.profileUrl = object.getString("profile_image_url");
+            this.tagLine = object.getString("description");
+            this.followerCount = object.getInt("followers_count");
+            this.followingCount = object.getInt("friends_count");
             this.tweetId = tweetId;
         } catch (JSONException e) {
             e.printStackTrace();
