@@ -10,7 +10,13 @@
     </style>
 
     <style name="MyActionBar" parent="Theme.AppCompat.Light.DarkActionBar">
+
+        <item name="android:actionBarStyle">@style/twitter_style</item>>
+    </style>
+
+    <style name="twitter_style" parent="@android:style/Widget.Holo.Light.ActionBar">
         <item name="android:background">#ff59f7ff</item>
+
     </style>
 
 </resources>

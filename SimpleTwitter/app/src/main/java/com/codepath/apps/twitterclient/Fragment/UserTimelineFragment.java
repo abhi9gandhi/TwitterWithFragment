@@ -23,6 +23,9 @@ import java.util.ArrayList;
  */
 public class UserTimelineFragment extends TimelineFragment implements TimelineFragment.Listener{
     private TwitterClient client;
+    long max_id = Long.MAX_VALUE;
+    long since_id;
+
 
     // TODO: Rename and change types and number of parameters
     public static UserTimelineFragment newInstance(String screen_name) {
@@ -42,6 +45,7 @@ public class UserTimelineFragment extends TimelineFragment implements TimelineFr
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         client = TwitterApp.getRestClient();
+        max_id = Long.MAX_VALUE;
     }
 
     @Override
@@ -57,7 +61,22 @@ public class UserTimelineFragment extends TimelineFragment implements TimelineFr
         // Use the offset value and add it as a parameter to your API request to retrieve paginated data.
         // Deserialize API response and then construct new objects to append to the adapter
         String screen_name = getArguments().getString("screen_name");
-        getUserTimeline(since_id, max_id,screen_name);
+        if (since_id > this.since_id) {
+            this.since_id = since_id;
+        }
+
+        if (max_id < this.max_id) {
+            this.max_id = max_id;
+        }
+
+        if (since_id == 1) {
+            this.since_id = Long.MAX_VALUE;
+        }
+        if (max_id == 1) {
+            this.max_id = Long.MAX_VALUE;
+        }
+
+        getUserTimeline(this.since_id, this.max_id,screen_name);
     }
 
     public void getUserTimeline(long since_id, long max_id, String screen_name) {
@@ -72,10 +91,10 @@ public class UserTimelineFragment extends TimelineFragment implements TimelineFr
 
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-                //   Log.d("DEBUG",errorResponse.toString());
+                 Log.d("DEBUG",errorResponse.toString());
                 Toast.makeText(getActivity(), "NO internet connection", Toast.LENGTH_SHORT);
-                clearArrayAdoptor();
-                addAll((ArrayList<Tweet>) Tweet.recentTweets());
+               // clearArrayAdoptor();
+               // addAll((ArrayList<Tweet>) Tweet.recentTweets());
             }
         });
     }

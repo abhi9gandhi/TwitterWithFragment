@@ -38,9 +38,12 @@ public class TwitterClient extends OAuthBaseClient {
         String apiUrl = getApiUrl("statuses/home_timeline.json");
         RequestParams params = new RequestParams();
         params.put("count", 5);
+        if (since_id == Long.MAX_VALUE) {
+            since_id =1;
+        }
         params.put("since_id", since_id);
-        if (max_id != 1){
-            params.put("max_id", max_id);
+        if (max_id != Long.MAX_VALUE){
+            params.put("max_id", max_id -1);
         }
         Log.d("DEBUG",apiUrl.toString() + since_id);
         getClient().get(apiUrl, params, handler);
@@ -50,9 +53,12 @@ public class TwitterClient extends OAuthBaseClient {
         String apiUrl = getApiUrl("statuses/mentions_timeline.json");
         RequestParams params = new RequestParams();
         params.put("count", 5);
-        params.put("since_id", since_id);
-        if (max_id != 1){
-            params.put("max_id", max_id);
+        if (since_id == Long.MAX_VALUE) {
+            since_id = 1;
+        }
+       params.put("since_id", since_id);
+        if (max_id != Long.MAX_VALUE){
+            params.put("max_id", max_id - 1);
         }
         Log.d("DEBUG",apiUrl.toString() + since_id);
         getClient().get(apiUrl, params, handler);
@@ -62,9 +68,12 @@ public class TwitterClient extends OAuthBaseClient {
         String apiUrl = getApiUrl("statuses/user_timeline.json");
         RequestParams params = new RequestParams();
         params.put("count", 5);
-        params.put("since_id", since_id);
-        if (max_id != 1){
-            params.put("max_id", max_id);
+        if (since_id == Long.MAX_VALUE) {
+            since_id =1;
+        }
+       params.put("since_id", since_id);
+        if (max_id != Long.MAX_VALUE){
+            params.put("max_id", max_id -1);
         }
         params.put("screen_name", scree_name);
         getClient().get(apiUrl, params, handler);

@@ -23,6 +23,8 @@ import java.util.ArrayList;
  */
 public class MentionTimelineFragment extends TimelineFragment implements TimelineFragment.Listener{
         private TwitterClient client;
+    long max_id = Long.MAX_VALUE;
+    long since_id;
 
         // TODO: Rename and change types and number of parameters
         public static MentionTimelineFragment newInstance() {
@@ -41,6 +43,7 @@ public class MentionTimelineFragment extends TimelineFragment implements Timelin
         public void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
             client = TwitterApp.getRestClient();
+            max_id = Long.MAX_VALUE;
         }
 
         @Override
@@ -55,8 +58,22 @@ public class MentionTimelineFragment extends TimelineFragment implements Timelin
             // This method probably sends out a network request and appends new data items to your adapter.
             // Use the offset value and add it as a parameter to your API request to retrieve paginated data.
             // Deserialize API response and then construct new objects to append to the adapter
+            if (since_id > this.since_id) {
+                this.since_id = since_id;
+            }
 
-            getMentionTimeline(since_id, max_id);
+            if (max_id < this.max_id) {
+                this.max_id = max_id;
+            }
+
+            if (since_id == 1) {
+                this.since_id = Long.MAX_VALUE;
+            }
+            if (max_id == 1) {
+                this.max_id = Long.MAX_VALUE;
+            }
+
+            getMentionTimeline(this.since_id, this.max_id);
         }
 
         public void getMentionTimeline(long since_id, long max_id) {
@@ -71,10 +88,10 @@ public class MentionTimelineFragment extends TimelineFragment implements Timelin
 
                 @Override
                 public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-                    //   Log.d("DEBUG",errorResponse.toString());
+                    Log.d("DEBUG",errorResponse.toString());
                     Toast.makeText(getActivity(), "NO internet connection", Toast.LENGTH_SHORT);
-                    clearArrayAdoptor();
-                    addAll((ArrayList<Tweet>) Tweet.recentTweets());
+                //    clearArrayAdoptor();
+                //    addAll((ArrayList<Tweet>) Tweet.recentTweets());
                 }
             });
         }

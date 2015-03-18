@@ -38,12 +38,8 @@ public class TimelineActivity extends ActionBarActivity {
         PagerSlidingTabStrip tabsStrip = (PagerSlidingTabStrip) findViewById(R.id.tabs);
         // Attach the view pager to the tab strip
         tabsStrip.setViewPager(viewpager);
-
-       // hometimelinefrag = HomeTimeLineFrgament.newInstance();
-    //    mentiontimefrag = MentionTimelineFragment.newInstance();
         client = TwitterApp.getRestClient();
-     //   getFragmentManager().beginTransaction().replace(R.id.flcontainer, hometimelinefrag).commit();
-     //   getFragmentManager().beginTransaction().replace(R.id.flcontainer, mentiontimefrag).commit();
+
     }
 
 

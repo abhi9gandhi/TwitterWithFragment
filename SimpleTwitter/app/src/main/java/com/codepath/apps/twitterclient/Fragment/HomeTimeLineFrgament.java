@@ -24,6 +24,8 @@ import java.util.ArrayList;
  */
 public class HomeTimeLineFrgament extends TimelineFragment implements TimelineFragment.Listener {
     private TwitterClient client;
+    long max_id = Long.MAX_VALUE;
+    long since_id;
 
     // TODO: Rename and change types and number of parameters
     public static HomeTimeLineFrgament newInstance() {
@@ -42,6 +44,7 @@ public class HomeTimeLineFrgament extends TimelineFragment implements TimelineFr
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         client = TwitterApp.getRestClient();
+        max_id = Long.MAX_VALUE;
       //  gettimeline(1,1);
     }
 
@@ -57,8 +60,22 @@ public class HomeTimeLineFrgament extends TimelineFragment implements TimelineFr
         // This method probably sends out a network request and appends new data items to your adapter.
         // Use the offset value and add it as a parameter to your API request to retrieve paginated data.
         // Deserialize API response and then construct new objects to append to the adapter
+        if (since_id > this.since_id) {
+            this.since_id = since_id;
+        }
 
-        gettimeline(since_id, max_id);
+        if (max_id < this.max_id) {
+            this.max_id = max_id;
+        }
+
+        if (since_id == 1) {
+            this.since_id = Long.MAX_VALUE;
+        }
+        if (max_id == 1) {
+            this.max_id = Long.MAX_VALUE;
+        }
+
+        gettimeline(this.since_id,this.max_id);
     }
 
     public void gettimeline(long since_id, long max_id) {
@@ -73,10 +90,10 @@ public class HomeTimeLineFrgament extends TimelineFragment implements TimelineFr
 
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-                //   Log.d("DEBUG",errorResponse.toString());
+                Log.d("DEBUG",errorResponse.toString());
                 Toast.makeText(getActivity(), "NO internet connection", Toast.LENGTH_SHORT);
-                clearArrayAdoptor();
-                addAll((ArrayList<Tweet>) Tweet.recentTweets());
+             //   clearArrayAdoptor();
+             //   addAll((ArrayList<Tweet>) Tweet.recentTweets());
             }
         });
     }

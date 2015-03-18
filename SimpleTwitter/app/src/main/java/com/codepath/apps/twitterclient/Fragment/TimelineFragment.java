@@ -53,6 +53,8 @@ public class TimelineFragment extends Fragment {
     private ListView ltweets;
     public SwipeRefreshLayout swipeContainer;
 
+
+
     public interface Listener  {
         public void customLoadMoreDataFromApi(long since_id, long max_id);
     };
@@ -127,10 +129,19 @@ public class TimelineFragment extends Fragment {
 //                Triggered only when new data needs to be appended to the list
 //                Add whatever code is needed to append new items to your AdapterView
                 long since_id = 1;
-                long max_id = 1;
+                long max_id = Long.MAX_VALUE;
                 if (tweets.size() != 0) {
-                    int index = tweets.size() - 1;
-                    max_id = tweets.get(index).getTweetId();
+                    for (int index = 0; index < tweets.size(); index++) {
+                        if (tweets.get(index).getTweetId() > since_id) {
+                            since_id = tweets.get(index).getTweetId();
+                        }
+
+                        if (tweets.get(index).getTweetId() <= max_id) {
+                            max_id = tweets.get(index).getTweetId();
+                        }
+                    }
+                 //   max_id = tweets.get(0).getTweetId();
+                 //   since_id = tweets.get(index).getTweetId();
                 }
                 mListener.customLoadMoreDataFromApi(since_id, max_id);
             }

@@ -26,6 +26,8 @@ public class Tweet extends Model {
     private User user;
     @Column(name = "tweetId")
     private long tweetId;
+
+
     @Column(name = "text")
 	private String text;
     @Column(name = "createAt")
@@ -84,8 +86,13 @@ public class Tweet extends Model {
 
             this.tweetId = object.getLong("id");
             this.user = new User(object.getJSONObject("user"), this.tweetId);
-            this.user.save();
-            this.save();
+
+
+
+
+
+          //  this.user.save();
+          //  this.save();
 
         } catch (JSONException e) {
 			e.printStackTrace();
